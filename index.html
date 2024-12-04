@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* Page Styling */
+body {
+    margin: 0;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background-color: #ffffff;
+  }
+
+.center {
+  text-align: center;
+}
+
+/* Navigation Bar*/
+.topnavigationbar {
+   overflow: hidden;
+   background-color: #0C0B13;
+  }
+
+.topnavigationbar a {
+  float: left;
+  color: #664EAE;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  }
+
+.topnavigationbar a.split {
+  float: right;
+  background-color: #664EAE;
+  color: #0C0B13;
+  }
+
+.topnavigationbar a:hover {
+  background-color: #ffffff;
+  color: #664EAE;
+  }
+
+  /* Sign Up / Sign In Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+  }
+
+  .modal-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #664EAE;
+  }
+
+  .modal-body input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+  .modal-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .modal-footer button {
+    padding: 10px 20px;
+    background-color: #664EAE;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .modal-footer button:hover {
+    background-color: #50398c;
+  }
+
+  .redirect-link {
+    color: #664EAE;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .redirect-link:hover {
+    text-decoration: underline;
+  }
+
+  .message-modal {
+    display: none;
+    position: fixed;
+    z-index: 2;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 2px solid #664EAE;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .message-modal button {
+    margin-top: 15px;
+    padding: 10px 15px;
+    background-color: #664EAE;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+  }
+
+ /* After Sign in Drop Down Menu*/   
+  #dropdownMenu {
+    position: absolute;
+    right: 16px;
+    top: 50px;
+    background-color: #0C0B13;
+    color: #664EAE;
+    border: 1px solid #664EAE;
+    display: none;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  #dropdownMenu a {
+    text-decoration: none;
+    color: #664EAE;
+    padding: 5px 10px;
+  }
+
+  #dropdownMenu a:hover {
+    background-color: #50398c;
+    color: white;
+  }
+
+/* Footer*/
+.BottomPage {
+       position: fixed;
+       left: 0;
+       bottom: 0;
+       width: 100%;
+       background-color: #0C0B13;
+       color: #664EAE;
+       text-align: center;
+       font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+       font-size: 17px;
+}
+
+/* Quiz Boxes*/
+.quiz-container {
+  margin: 20px;
+}
+
+.question-block {
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid #000000;
+  background-color: #000000;
+  color: #664EAE;
+}
+
+.question {
+  font-size: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+  height: 20%;
+}
+
+.image2 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+  height: 30%;
+}
+
+/* Answer Block Replacment*/
+.answer {
+  display: block;
+  background-color: #000000;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #664EAE;
+  cursor: pointer;
+  text-align: left;
+}
+
+.answer:hover {
+  background-color: #e0e0e0;
+}
+
+.correct {
+  background-color: #28a745 !important;
+  color: #ffffff;
+}
+
+.wrong {
+  background-color: #dc3545 !important;
+  color: #ffffff;
+}
+
+.feedback {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.correct-text {
+  color: #28a745;
+}
+
+.wrong-text {
+  color: #dc3545;
+}
+
+/* Introduction Section*/
+.header-section {
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: center;
+  font-size: 30px;
+  color: #664EAE;
+}
+
+.text-area {
+  padding: 10px;
+  font-size: 18px;
+  line-height: 1.5;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+/* Bottom Results Box (Time & Score)*/
+.results-container {
+  text-align: center;
+  font-size: 24px;
+  color: #664EAE;
+  margin: 50px auto;
+  display: none;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+}
+
+.results-container p {
+  margin: 10px 0;
+}
+
+</style>
+</head>
+
+<!-- Navigation Bar -->
+<div class="topnavigationbar">
+  <a class="active" href="Homepage.html">Home</a>
+  <a href="QuizPage.html">Quiz's</a>
+  <a href="#" class="split" id="signupBtn">Sign Up</a>
+  <a href="#" class="split" id="userMenu" style="display: none;">
+    <span id="usernameDisplay"></span>
+  </a>
+  <div id="dropdownMenu">
+    <a href="#" onclick="showAccountInfo()">Account</a>
+    <a href="#" onclick="signOut()">Sign Out</a>
+  </div>
+</div>
+
+<div class="header-section">
+  <h1>Tech Quiz</h1>
+</div>
+
+<div class="text-area">
+  <p style="color:#664EAE;">Are you a tech wizard, a gadget guru, or just someone who loves exploring the digital world? Get ready to challenge your knowledge of the innovations, pioneers, and trends that have shaped the modern era. From groundbreaking inventions to the latest tech marvels, this quiz is designed to test how plugged in you really are!</p>
+</div>
+
+<div class="quiz-container" id="quiz-container"></div>
+
+<div class="results-container" id="results-container">
+  <!-- This section is dynamically updated by JavaScript -->
+</div>
+
+<!-- Sign In/Sing Up Models -->
+<div id="signupModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">Sign Up</div>
+    <div class="modal-body">
+      <label for="signup-username">Username</label>
+      <input type="text" id="signup-username" placeholder="Enter your username">
+      <span id="signup-username-error" class="error-message"></span>
+      <label for="signup-password">Password</label>
+      <input type="password" id="signup-password" placeholder="Enter your password">
+      <span id="signup-password-error" class="error-message"></span>
+      <label for="confirm-password">Confirm Password</label>
+      <input type="password" id="confirm-password" placeholder="Confirm your password">
+      <span id="confirm-password-error" class="error-message"></span>
+    </div>
+    <div class="modal-footer">
+      <button onclick="handleSignUp()">Sign Up</button>
+      <a href="#" class="redirect-link" onclick="showSignIn()">Already have an account? Sign In</a>
+    </div>
+  </div>
+</div>
+
+<div id="signinModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">Sign In</div>
+    <div class="modal-body">
+      <label for="signin-username">Username</label>
+      <input type="text" id="signin-username" placeholder="Enter your username">
+      <span id="signin-username-error" class="error-message"></span>
+      <label for="signin-password">Password</label>
+      <input type="password" id="signin-password" placeholder="Enter your password">
+      <span id="signin-password-error" class="error-message"></span>
+    </div>
+    <div class="modal-footer">
+      <button onclick="handleSignIn()">Sign In</button>
+      <a href="#" class="redirect-link" onclick="showSignUp()">Don't have an account? Sign Up</a>
+    </div>
+  </div>
+</div>
+
+<!-- Account Modal -->
+<div id="accountModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">Account Information</div>
+    <div class="modal-body">
+      <p><strong>Username:</strong> <span id="accountUsername"></span></p>
+      <p><strong>Password:</strong></p>
+      <input type="password" id="accountPassword" readonly>
+    </div>
+    <div class="modal-footer">
+      <button onclick="closeModal('accountModal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="messageModal" class="message-modal">
+  <div id="messageText"></div>
+  <button id="messageOkButton" onclick="closeMessage()" style="display: none;">OK</button>
+</div>
+
+<!-- Footer -->
+<div class="BottomPage">
+  <p style="color: #0084fE;">A Zain Project</p>
+</div>
+
+<div class="BottomPage">
+  <p style="color: #664EAE;">A Zain Project</p>
+</div>
+
+<script>
+  // Question bank
+  const questions = [
+  {
+    question: "Who is the founder of Microsoft?",
+    answers: [
+      { text: "Steve Jobs", correct: false },
+      { text: "Bill Gates", correct: true },
+      { text: "Larry Page", correct: false },
+      { text: "Jeff Bezos", correct: false }
+    ]
+  },
+  {
+    question: "What does 'HTTP' stand for?",
+    answers: [
+      { text: "HyperText Transfer Protocol", correct: true },
+      { text: "Hyperlink Transfer Protocol", correct: false },
+      { text: "Hyper Transfer Text Protocol", correct: false },
+      { text: "Hyperlink Text Transfer Protocol", correct: false }
+    ]
+  },
+  {
+    question: "What year was the first iPhone released?",
+    answers: [
+      { text: "2005", correct: false },
+      { text: "2007", correct: true },
+      { text: "2008", correct: false },
+      { text: "2006", correct: false }
+    ]
+  },
+  {
+    question: "Which programming language is known as the backbone of web development?",
+    answers: [
+      { text: "Python", correct: false },
+      { text: "Java", correct: false },
+      { text: "JavaScript", correct: true },
+      { text: "C++", correct: false }
+    ]
+  },
+  {
+    question: "What does 'AI' stand for in technology?",
+    answers: [
+      { text: "Automated Interface", correct: false },
+      { text: "Artificial Intelligence", correct: true },
+      { text: "Advanced Innovation", correct: false },
+      { text: "Applied Intelligence", correct: false }
+    ]
+  },
+  {
+    question: "Who is known as the father of the computer?",
+    answers: [
+      { text: "Alan Turing", correct: false },
+      { text: "Charles Babbage", correct: true },
+      { text: "John von Neumann", correct: false },
+      { text: "Thomas Edison", correct: false }
+    ]
+  },
+  {
+    question: "What does 'USB' stand for?",
+    answers: [
+      { text: "Universal Serial Bus", correct: true },
+      { text: "Unified System Backup", correct: false },
+      { text: "Universal System Board", correct: false },
+      { text: "Unique Serial Bus", correct: false }
+    ]
+  },
+  {
+    question: "Which company created the Android operating system?",
+    answers: [
+      { text: "Apple", correct: false },
+      { text: "Google", correct: true },
+      { text: "Microsoft", correct: false },
+      { text: "Samsung", correct: false }
+    ]
+  },
+  {
+    question: "What does the 'C' in CPU stand for?",
+    answers: [
+      { text: "Control", correct: false },
+      { text: "Central", correct: true },
+      { text: "Compute", correct: false },
+      { text: "Core", correct: false }
+    ]
+  },
+  {
+    question: "Which social media platform has a blue bird as its logo?",
+    answers: [
+      { text: "Facebook", correct: false },
+      { text: "Twitter", correct: true },
+      { text: "Instagram", correct: false },
+      { text: "LinkedIn", correct: false }
+    ]
+  },
+  {
+    question: "What does 'VPN' stand for?",
+    answers: [
+      { text: "Virtual Public Network", correct: false },
+      { text: "Virtual Private Network", correct: true },
+      { text: "Virtual Protected Network", correct: false },
+      { text: "Verified Private Network", correct: false }
+    ]
+  },
+  {
+    question: "Which company is known for the search engine 'Bing'?",
+    answers: [
+      { text: "Google", correct: false },
+      { text: "Microsoft", correct: true },
+      { text: "Yahoo", correct: false },
+      { text: "Amazon", correct: false }
+    ]
+  },
+  {
+    question: "What is the name of Apple's voice assistant?",
+    answers: [
+      { text: "Alexa", correct: false },
+      { text: "Siri", correct: true },
+      { text: "Cortana", correct: false },
+      { text: "Google Assistant", correct: false }
+    ]
+  },
+  {
+    question: "Which programming language is often associated with data analysis?",
+    answers: [
+      { text: "C++", correct: false },
+      { text: "R", correct: true },
+      { text: "PHP", correct: false },
+      { text: "Swift", correct: false }
+    ]
+  },
+  {
+    question: "What does 'RAM' stand for?",
+    answers: [
+      { text: "Random Access Memory", correct: true },
+      { text: "Read Access Memory", correct: false },
+      { text: "Run Access Memory", correct: false },
+      { text: "Random Applied Memory", correct: false }
+    ]
+  },
+  {
+    question: "Which company created the video conferencing platform Zoom?",
+    answers: [
+      { text: "Google", correct: false },
+      { text: "Microsoft", correct: false },
+      { text: "Zoom Video Communications", correct: true },
+      { text: "Cisco", correct: false }
+    ]
+  },
+  {
+    question: "What is the name of Tesla’s AI-powered self-driving system?",
+    answers: [
+      { text: "AutoPilot", correct: true },
+      { text: "Drive AI", correct: false },
+      { text: "SmartDrive", correct: false },
+      { text: "TeslaNavigator", correct: false }
+    ]
+  },
+  {
+    question: "What year was the company Facebook founded?",
+    answers: [
+      { text: "2004", correct: true },
+      { text: "2006", correct: false },
+      { text: "2008", correct: false },
+      { text: "2002", correct: false }
+    ]
+  },
+  {
+    question: "What does the 'I' in IoT stand for?",
+    answers: [
+      { text: "Internet", correct: true },
+      { text: "Information", correct: false },
+      { text: "Intelligence", correct: false },
+      { text: "Interface", correct: false }
+    ]
+  },
+  {
+    question: "What is the name of the first successful computer?",
+    answers: [
+      { text: "ENIAC", correct: true },
+      { text: "UNIVAC", correct: false },
+      { text: "Z3", correct: false },
+      { text: "Colossus", correct: false }
+    ]
+  },
+  {
+    question: "Which company is known for its flagship product, Windows?",
+    answers: [
+      { text: "Apple", correct: false },
+      { text: "Microsoft", correct: true },
+      { text: "IBM", correct: false },
+      { text: "Google", correct: false }
+    ]
+  },
+  {
+    question: "What does the 'SQL' in MySQL stand for?",
+    answers: [
+      { text: "Structured Query Language", correct: true },
+      { text: "Simple Query Logic", correct: false },
+      { text: "Standard Query Language", correct: false },
+      { text: "Structured Quality Logic", correct: false }
+    ]
+  },
+  {
+    question: "What year was Google founded?",
+    answers: [
+      { text: "1998", correct: true },
+      { text: "2000", correct: false },
+      { text: "1995", correct: false },
+      { text: "1997", correct: false }
+    ]
+  },
+  {
+    question: "What is the name of the AI developed by OpenAI?",
+    answers: [
+      { text: "AlphaGo", correct: false },
+      { text: "ChatGPT", correct: true },
+      { text: "DeepMind", correct: false },
+      { text: "Watson", correct: false }
+    ]
+  },
+  {
+    question: "What is the default file extension for a Microsoft Excel workbook?",
+    answers: [
+      { text: ".xls", correct: false },
+      { text: ".xlsx", correct: true },
+      { text: ".docx", correct: false },
+      { text: ".pptx", correct: false }
+    ]
+  },
+  {
+    question: "What does 'URL' stand for?",
+    answers: [
+      { text: "Uniform Resource Locator", correct: true },
+      { text: "Universal Resource Link", correct: false },
+      { text: "Unified Resource Loader", correct: false },
+      { text: "Universal Record Locator", correct: false }
+    ]
+  },
+  {
+    question: "Which company owns YouTube?",
+    answers: [
+      { text: "Facebook", correct: false },
+      { text: "Google", correct: true },
+      { text: "Microsoft", correct: false },
+      { text: "Apple", correct: false }
+    ]
+  },
+  {
+    question: "Which programming language is primarily used for iOS app development?",
+    answers: [
+      { text: "Python", correct: false },
+      { text: "Swift", correct: true },
+      { text: "Java", correct: false },
+      { text: "C#", correct: false }
+    ]
+  }
+];
+
+// Timer
+  let timerInterval;
+  let timeElapsed = 0;
+  let score = 0;
+  let questionsAnswered = 0;
+
+// Shuffle questions
+  function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5);
+  }
+
+// Starts The Timer
+  function startTimer() {
+    timerInterval = setInterval(() => {
+      timeElapsed++;
+    }, 1000);
+  }
+
+// Stops The Timer
+  function stopTimer() {
+    clearInterval(timerInterval);
+  }
+
+// Renders the questions from the array
+  function renderQuiz() {
+    const quizContainer = document.getElementById("quiz-container");
+    quizContainer.innerHTML = ""; // Clear existing questions
+
+    const selectedQuestions = shuffleArray([...questions]).slice(0, 10); // Pick 10 random questions from the array
+
+    selectedQuestions.forEach((questionObj, index) => {
+      const questionBlock = document.createElement("div");
+      questionBlock.className = "question-block";
+
+      // Question text
+      const questionText = document.createElement("div");
+      questionText.className = "question";
+      questionText.innerText = `Question ${index + 1}: ${questionObj.question}`;
+      questionBlock.appendChild(questionText);
+
+      // Answers
+      questionObj.answers.forEach(answer => {
+        const answerDiv = document.createElement("div");
+        answerDiv.className = "answer";
+        answerDiv.innerText = answer.text;
+        answerDiv.onclick = () => {
+          if (!timerInterval) startTimer();
+          questionsAnswered++;
+          if (answer.correct) {
+            score++;
+            questionBlock.innerHTML = `<div class="feedback correct-text">CORRECT</div>`;
+          } else {
+            questionBlock.innerHTML = `<div class="feedback wrong-text">WRONG</div>`;
+          }
+          if (questionsAnswered === selectedQuestions.length) {
+            stopTimer();
+            showResults(selectedQuestions.length);
+          }
+        };
+        questionBlock.appendChild(answerDiv);
+      });
+
+      quizContainer.appendChild(questionBlock);
+    });
+  }
+
+  function showResults(totalQuestions) {
+    const resultsContainer = document.getElementById("results-container");
+    resultsContainer.style.display = "block";
+    resultsContainer.innerHTML = `
+      <p>Your Score: ${score}/${totalQuestions}</p>
+      <p>Total Time: ${timeElapsed} seconds</p>
+    `;
+    resultsContainer.scrollIntoView({ behavior: "smooth" });
+  }
+
+// Load the quiz everytime a user refreshes 
+  window.onload = renderQuiz;
+</script>
+
+<!-- Java Code for Sign Up/Sign In Functions -->
+<script>
+  const signupModal = document.getElementById('signupModal');
+  const signinModal = document.getElementById('signinModal');
+  const messageModal = document.getElementById('messageModal');
+  const messageText = document.getElementById('messageText');
+  const messageOkButton = document.getElementById('messageOkButton');
+
+  document.getElementById('signupBtn').onclick = () => {
+    signupModal.style.display = 'flex';
+  };
+
+  function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+  }
+
+  function closeMessage() {
+    messageModal.style.display = 'none';
+  }
+
+  function showSignIn() {
+    closeModal('signupModal');
+    signinModal.style.display = 'flex';
+  }
+
+  function showSignUp() {
+    closeModal('signinModal');
+    signupModal.style.display = 'flex';
+  }
+
+  function handleSignUp() {
+    const username = document.getElementById('signup-username').value.trim();
+    const password = document.getElementById('signup-password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    const usernameError = document.getElementById('signup-username-error');
+    const passwordError = document.getElementById('signup-password-error');
+    const confirmPasswordError = document.getElementById('confirm-password-error');
+
+    let isValid = true;
+
+    usernameError.textContent = '';
+    passwordError.textContent = '';
+    confirmPasswordError.textContent = '';
+
+    if (!username) {
+      usernameError.textContent = 'Username is required.';
+      isValid = false;
+    }
+
+    if (!password) {
+      passwordError.textContent = 'Password is required.';
+      isValid = false;
+    } else if (password.length < 6) {
+      passwordError.textContent = 'Password must be at least 6 characters.';
+      isValid = false;
+    }
+
+    if (!confirmPassword) {
+      confirmPasswordError.textContent = 'Please confirm your password.';
+      isValid = false;
+    } else if (confirmPassword !== password) {
+      confirmPasswordError.textContent = 'Passwords do not match.';
+      isValid = false;
+    }
+
+    if (isValid) {
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', password);
+      closeModal('signupModal');
+      messageText.textContent = 'You are now signed up! Please sign in.';
+      messageModal.style.display = 'block';
+      messageOkButton.style.display = 'inline-block';
+      messageOkButton.onclick = () => {
+        messageModal.style.display = 'none';
+        signinModal.style.display = 'flex';
+      };
+    }
+  }
+
+  function handleSignIn() {
+    const username = document.getElementById('signin-username').value.trim();
+    const password = document.getElementById('signin-password').value;
+
+    const usernameError = document.getElementById('signin-username-error');
+    const passwordError = document.getElementById('signin-password-error');
+
+    let isValid = true;
+
+    usernameError.textContent = '';
+    passwordError.textContent = '';
+
+    if (!username) {
+      usernameError.textContent = 'Username is required.';
+      isValid = false;
+    }
+
+    if (!password) {
+      passwordError.textContent = 'Password is required.';
+      isValid = false;
+    }
+
+    if (isValid) {
+      const storedUsername = localStorage.getItem('username');
+      const storedPassword = localStorage.getItem('password');
+
+      if (username === storedUsername && password === storedPassword) {
+        closeModal('signinModal');
+        updateNavigation(username);
+        messageText.textContent = `Welcome, ${username}!`;
+        messageModal.style.display = 'block';
+        messageOkButton.style.display = 'none';
+        setTimeout(() => {
+          messageModal.style.display = 'none';
+        }, 2000);
+      } else {
+        messageText.textContent = 'Incorrect username or password!';
+        messageModal.style.display = 'block';
+        messageOkButton.style.display = 'none';
+        setTimeout(() => {
+          messageModal.style.display = 'none';
+        }, 2000);
+      }
+    }
+  }
+
+  function updateNavigation(username) {
+    const signupBtn = document.getElementById('signupBtn');
+    const userMenu = document.getElementById('userMenu');
+    const usernameDisplay = document.getElementById('usernameDisplay');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    signupBtn.style.display = 'none';
+    userMenu.style.display = 'inline-block';
+    usernameDisplay.textContent = username;
+
+    userMenu.onclick = () => {
+      dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
+    };
+
+    window.onclick = (event) => {
+      if (!userMenu.contains(event.target)) {
+        dropdownMenu.style.display = 'none';
+      }
+    };
+  }
+
+  function showAccountInfo() {
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
+
+    document.getElementById('accountUsername').textContent = username;
+    document.getElementById('accountPassword').value = password;
+
+    document.getElementById('accountModal').style.display = 'flex';
+  }
+
+  function signOut() {
+    document.getElementById('signupBtn').style.display = 'inline-block';
+    document.getElementById('userMenu').style.display = 'none';
+    document.getElementById('dropdownMenu').style.display = 'none';
+
+    messageText.textContent = 'You have signed out.';
+    messageModal.style.display = 'block';
+    messageOkButton.style.display = 'none';
+
+    setTimeout(() => {
+      messageModal.style.display = 'none';
+    }, 2000);
+  }
+</script>
+
+</body>
+</html>
